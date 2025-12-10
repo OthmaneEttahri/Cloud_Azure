@@ -9,14 +9,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Copie et installation des requirements
-# --- CORRECTION ICI ---
-# On copie d'abord le fichier dans le conteneur
-COPY requirements.txt . 
-# Ensuite on lance l'installation
+# 2. Installation des dépendances Python
+# On copie le fichier qui est maintenant à la racine
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 3. Copie du code source (Le dossier ProjetDjango vers /app)
+# 3. Copie du code source
+# On prend le contenu du dossier ProjetDjango et on le met dans /app
 COPY ProjetDjango/ .
 
 # 4. Config SSH & Entrypoint
