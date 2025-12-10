@@ -3,29 +3,34 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # 1. Installation système + SSH
-# On utilise la commande 'bash' qui est plus robuste que sh
+# On installe openssh-server et on définit le mot de passe root
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        bash gcc libpq-dev openssh-server \
+        gcc libpq-dev openssh-server \
     && echo "root:Docker!" | chpasswd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Installation des dépendances Python
+# --- FIX CRITIQUE SSH ---
+# Création du dossier indispensable pour que SSH démarre
+RUN mkdir -p /run/sshd
+# ------------------------
+
+# 2. Installation dépendances
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 3. Copie du code source
+# 3. Copie du code
 COPY ProjetDjango/ .
 
-# 4. Config SSH
+# 4. Config SSH (Assure-toi que le fichier sshd_config est bien à la racine de ton projet)
 COPY sshd_config /etc/ssh/
 
 # 5. Static files
 RUN python manage.py collectstatic --noinput
 
-# 6. Ports et Lancement
+# 6. Ports (Web + SSH)
 EXPOSE 8000 2222
 
-# On utilise CMD (plus souple) au lieu d'ENTRYPOINT
-# La commande est simple : Démarrer SSH, puis démarrer Gunicorn
-CMD service ssh start && gunicorn --bind 0.0.0.0:8000 ProjetDjango.wsgi:application
+# 7. Commande de démarrage ROBUSTE
+# On lance sshd directement (pas via service) puis Gunicorn
+CMD ["sh", "-c", "/usr/sbin/sshd && gunicorn --bind 0.0.0.0:8000 ProjetDjango.wsgi:application"]
