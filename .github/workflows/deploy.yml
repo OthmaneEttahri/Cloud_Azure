@@ -29,6 +29,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'projetazure-webapp'
-        # On passe SEULEMENT le nom de l'image (monapp:latest)
-        images: 'monapp:latest' 
+        # ON REMET LE CHEMIN COMPLET
+        images: '${{ secrets.ACR_LOGIN_SERVER }}/monapp:latest' 
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
