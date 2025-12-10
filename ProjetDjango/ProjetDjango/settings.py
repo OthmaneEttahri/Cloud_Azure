@@ -142,3 +142,9 @@ else:
     # Configuration locale (garde ce que tu as déjà)
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# CRSF Trusted Origins
+CSRF_TRUSTED_ORIGINS = [
+    'https://projetazure-webapp.azurewebsites.net',
+]
