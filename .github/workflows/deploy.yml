@@ -1,4 +1,5 @@
 name: Deploy to Azure
+
 on:
   push:
     branches: [ "main" ]
@@ -6,26 +7,27 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v3
-
-    # Connexion au registre Docker (ACR)
+    
+    # 1. Connexion au registre Docker (ACR) pour pouvoir Pousser l'image
     - name: Docker Login
       uses: azure/docker-login@v1
       with:
         login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
-
-    # Construction et Envoi de l'image
+    
+    # 2. Construction et Envoi de l'image
     - run: |
         docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/monapp:latest
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/monapp:latest
-
-    # Mise à jour de la Web App
-    # Remplace 'projetdjango-webapp' par le nom EXACT défini dans ton main.tf (resource azurerm_linux_web_app)
+        
+    # 3. Déploiement sur la Web App via le Profil de Publication (La correction est ICI)
     - name: Deploy via Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'projetdjango-webapp' 
+        app-name: 'projetazure-webapp' # Vérifie que c'est bien le nom exact de ta Web App
         images: '${{ secrets.ACR_LOGIN_SERVER }}/monapp:latest'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # On ajoute ça
