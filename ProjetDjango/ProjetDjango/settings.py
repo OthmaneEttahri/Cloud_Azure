@@ -24,10 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-^=q%u(*9f)p9td*&62i0u_*%tbydgkr^d-49g3#xmuv#s89z2g"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
 
 ALLOWED_HOSTS = ['*']
 
+# CRSF Trusted Origins
+CSRF_TRUSTED_ORIGINS = [
+    'https://projetazure-webapp.azurewebsites.net',
+]
+
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -144,10 +152,3 @@ else:
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# CRSF Trusted Origins
-CSRF_TRUSTED_ORIGINS = [
-    'https://projetazure-webapp.azurewebsites.net',
-]
-
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
