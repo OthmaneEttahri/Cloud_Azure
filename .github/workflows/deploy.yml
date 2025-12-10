@@ -28,6 +28,7 @@ jobs:
     - name: Deploy via Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'projetazure-webapp' # Vérifie que c'est bien le nom exact de ta Web App
-        images: '${{ secrets.ACR_LOGIN_SERVER }}/monapp:latest'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # On ajoute ça
+        app-name: 'projetazure-webapp'
+        # On passe SEULEMENT le nom de l'image (monapp:latest)
+        images: 'monapp:latest' 
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
