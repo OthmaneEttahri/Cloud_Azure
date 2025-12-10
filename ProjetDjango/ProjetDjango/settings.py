@@ -148,3 +148,6 @@ else:
 CSRF_TRUSTED_ORIGINS = [
     'https://projetazure-webapp.azurewebsites.net',
 ]
+
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
