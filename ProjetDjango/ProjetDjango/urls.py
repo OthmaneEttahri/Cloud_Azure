@@ -21,9 +21,14 @@ from drive import views
 from django.shortcuts import redirect
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
+from django.shortcuts import redirect
+
+def redirect_to_login(request):
+    return redirect('login')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('', redirect_to_login, name='home'),
     path("upload/", views.upload, name="upload"),
     path("login/", views.login, name="login"),
     path("logout/", views.custom_logout, name="logout"),

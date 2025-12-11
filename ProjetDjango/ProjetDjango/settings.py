@@ -128,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # On vérifie si on est en Prod (variable d'env à definir sur Azure)
 if os.getenv('AZURE_STORAGE_CONNECTION_STRING'):
