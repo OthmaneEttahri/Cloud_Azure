@@ -40,6 +40,7 @@ pip install -r requirements.txt
 Lancer les migrations et créer un admin :
 
 python manage.py migrate
+
 python manage.py createsuperuser
 
 Lancer le serveur :
@@ -79,8 +80,13 @@ python manage.py createsuperuser
 
 
 Application Web	✅ Fait	Django 5.x avec interface utilisateur complète.
+
 Conteneurisation	✅ Fait	Dockerfile optimisé (multi-stage non requis ici car Python), image légère slim.
+
 Infrastructure as Code	✅ Fait	Terraform complet (main.tf) pour provisionner Azure.
+
 Pipeline CI/CD	✅ Fait	GitHub Actions pour Build & Deploy automatique.
+
 Stockage Cloud	✅ Fait	Utilisation d'Azure Blob Storage pour la persistance des médias.
+
 Sécurité	✅ Fait	Gestion des secrets (GitHub Secrets), HTTPS géré par Azure, CSRF protection Django.
