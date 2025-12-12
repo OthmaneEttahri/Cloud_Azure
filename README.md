@@ -78,6 +78,7 @@ python manage.py migrate
 python manage.py createsuperuser
 
 
+## Conclusion milestones
 
 Application Web	✅ Fait	Django 5.x avec interface utilisateur complète.
 
